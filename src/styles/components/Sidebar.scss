@@ -1,0 +1,30 @@
+@import '../colors.scss';
+
+.sidebar {
+  background-color: $black-2;
+  padding: 1em 0em 1em 0em;
+  width: 25%;
+  max-width: 350px;
+  min-width: 17em;
+  flex-grow: 1;
+  box-shadow: 6px 2px 8px rgba(0, 0, 0, 0.3);
+
+  .sb-section {
+    position: relative;
+
+    .sb-section-head {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 1em;
+    }
+
+    .sb-section-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+      justify-content: space-evenly;
+    }
+  }
+  // TO DO: CREATE RETRACTABLE (BURGER-STYLE SIDEBAR) WITH
+  // < ICON ON THE RIGHT BORDER AND THEN > ICON ON THE LEFT SIDE WHEN IT'S CLOSED
+}

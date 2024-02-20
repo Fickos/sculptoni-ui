@@ -1,0 +1,41 @@
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+input.line-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid #0baeb7;
+  outline: none;
+  background-color: transparent;
+  color: #fff;
+
+  &::placeholder {
+    color: #bbb;
+  }
+
+  &:focus {
+    border-bottom: 2px solid #0baeb7;
+  }
+}
+
+input.invalid {
+  border-bottom: 1px solid #c64640;
+
+  &:focus {
+    border-bottom: 2px solid #c64640;
+  }
+}
