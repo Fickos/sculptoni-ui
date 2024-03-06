@@ -4,6 +4,7 @@ import { Layer, Stage } from 'react-konva';
 import { useDispatch, useSelector } from 'react-redux';
 import CanvasElement from './CanvasElement';
 import { addElement } from '../../redux/workspaceSlice';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Canvas() {
   const stageRef = useRef();
@@ -11,12 +12,10 @@ export default function Canvas() {
   const dispatch = useDispatch();
 
   const elements = useSelector((state) => state.workspace.elements);
-  console.log('ELEMENTS', elements);
 
   const [{ canDrop }, drop] = useDrop({
     accept: 'box',
     drop: (item, monitor) => {
-      console.log('DEBUG', item);
       const stage = stageRef.current.getStage();
       const itemOffset = monitor.getClientOffset();
 
@@ -39,6 +38,7 @@ export default function Canvas() {
           y: canvasPosition.y,
           type: item.type,
           scale: stage.scaleX(),
+          workspaceId: uuidv4(),
           ...item,
         })
       );
@@ -102,6 +102,7 @@ export default function Canvas() {
               y={el.y}
               type={el.type}
               scale={el.scale}
+              {...el}
             />
           ))}
         </Layer>

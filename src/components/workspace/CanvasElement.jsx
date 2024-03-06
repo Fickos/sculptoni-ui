@@ -5,6 +5,9 @@ import { Html } from 'react-konva-utils';
 
 import '../../styles/components/canvas-elements/BaseElement.scss';
 import '../../styles/components/canvas-elements/Component.scss'; // To do : new file
+import ComponentPageBase from './canvas-elements/ComponentPageBase';
+import { useDispatch } from 'react-redux';
+import { setSelectedElement } from '../../redux/workspaceSlice';
 
 CanvasElement.propTypes = {
   x: PropTypes.number,
@@ -17,6 +20,8 @@ CanvasElement.propTypes = {
 export default function CanvasElement(props) {
   // eslint-disable-next-line no-unused-vars
   const { x, y, type, scale, ...rest } = props; // ...rest will be used in flyin dialog
+
+  const dispatch = useDispatch();
 
   const divRef = useRef(null);
   const [divDimensions, setDivDimensions] = useState({ width: 0, height: 0 });
@@ -72,9 +77,9 @@ export default function CanvasElement(props) {
   const renderCardContent = () => {
     switch (type) {
       case 'component':
-        return <>Component</>;
+        return <ComponentPageBase />;
       case 'page':
-        return <>Page</>;
+        return <ComponentPageBase isPage />;
       case 'service':
         return <>Service</>;
       case 'util':
@@ -97,16 +102,22 @@ export default function CanvasElement(props) {
     setPosition({ x: e.target.x(), y: e.target.y() });
   };
 
+  const handleFlyinDialog = () => {
+    console.log('SET SELECTED ELEMENT', rest.workspaceId);
+    dispatch(setSelectedElement(rest.workspaceId));
+  };
+
   return (
     <>
       <Group draggable x={position.x} y={position.y} onDragEnd={handleDragEnd}>
         <Html divProps={{ style: { pointerEvents: 'none' } }}>
           <div
             ref={divRef}
-            className="canvas-element"
+            className={`canvas-element ${type}`}
             style={{
               width: resized && divDimensions.width,
               height: resized && divDimensions.height,
+              userSelect: 'none',
             }}
           >
             {renderCardContent()}
@@ -116,9 +127,10 @@ export default function CanvasElement(props) {
           width={divDimensions.width}
           height={divDimensions.height}
           shadowBlur={10}
-          onClick={() => console.log('Open Fly-in')}
+          onClick={handleFlyinDialog}
         />
         {/* Below is the div which enables resizing within canvas */}
+        {/* TO DO: RESIZER DISAPPEARS WHEN REDUCED TO MINHEIGHT-MINWIDTH */}
       </Group>
       <Group
         x={position.x + divDimensions.width}
