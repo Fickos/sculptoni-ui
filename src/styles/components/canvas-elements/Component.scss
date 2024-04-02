@@ -2,6 +2,7 @@
 
 .component,
 .page {
+  width: unset;
   .stripe-head {
     > .type-indicator {
       color: $black;
@@ -45,6 +46,7 @@
   > .stripe-four {
     flex: 1;
     display: flex;
+    overflow: hidden;
     cursor: pointer;
 
     > div {
@@ -79,4 +81,8 @@
       }
     }
   }
+}
+
+.page {
+  height: 14.5em;
 }

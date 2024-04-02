@@ -5,6 +5,7 @@ import Canvas from './Canvas';
 import FlyInDialog from './generic/FlyInDialog';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedElement } from '../../redux/workspaceSlice';
+import { EditorProvider } from './context/EditorProvider';
 
 export default function WorkspaceContext() {
   const dispatch = useDispatch();
@@ -20,13 +21,15 @@ export default function WorkspaceContext() {
   };
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="workspace">
-        <Sidebar />
-        <Canvas />
-        <FlyInDialog open={selectedElement !== null} setOpen={setOpen}>
-          <div>This is flyInDialog</div>
-        </FlyInDialog>
-      </div>
+      <EditorProvider>
+        <div className="workspace">
+          <Sidebar />
+          <Canvas />
+          <FlyInDialog open={selectedElement !== null} setOpen={setOpen}>
+            <div>This is flyInDialog</div>
+          </FlyInDialog>
+        </div>
+      </EditorProvider>
     </DndProvider>
   );
 }

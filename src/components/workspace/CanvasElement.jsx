@@ -8,6 +8,8 @@ import '../../styles/components/canvas-elements/Component.scss'; // To do : new 
 import ComponentPageBase from './canvas-elements/ComponentPageBase';
 import { useDispatch } from 'react-redux';
 import { setSelectedElement } from '../../redux/workspaceSlice';
+import ServiceUtilBase from './canvas-elements/ServiceUtilBase';
+import { useEditor } from './context/EditorContext';
 
 CanvasElement.propTypes = {
   x: PropTypes.number,
@@ -22,6 +24,8 @@ export default function CanvasElement(props) {
   const { x, y, type, scale, ...rest } = props; // ...rest will be used in flyin dialog
 
   const dispatch = useDispatch();
+
+  const editorInfo = useEditor();
 
   const divRef = useRef(null);
   const [divDimensions, setDivDimensions] = useState({ width: 0, height: 0 });
@@ -43,6 +47,7 @@ export default function CanvasElement(props) {
     updateDimensions();
   }, [divRef, scale]);
 
+  // Do this within a hook?
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (isResizing && divRef.current) {
@@ -52,7 +57,23 @@ export default function CanvasElement(props) {
         const newWidth = divRef.current.offsetWidth + deltaX;
         const newHeight = divRef.current.offsetHeight + deltaY;
 
-        setDivDimensions({ width: newWidth, height: newHeight });
+        // Handle minHeight and minWidth
+        const { firstElementChild } = divRef.current;
+        if (firstElementChild) {
+          const minHeight =
+            firstElementChild?.getBoundingClientRect().height /
+            editorInfo.scale;
+
+          setDivDimensions({
+            width: newWidth,
+            height: Math.max(minHeight ?? 0, newHeight),
+          });
+        } else {
+          setDivDimensions({
+            width: newWidth,
+            height: newHeight,
+          });
+        }
         setInitialResizePos({ x: e.clientX, y: e.clientY });
       }
     };
@@ -72,7 +93,7 @@ export default function CanvasElement(props) {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isResizing, initialResizePos, divRef, scale]);
+  }, [isResizing, initialResizePos, divRef, editorInfo]);
 
   const renderCardContent = () => {
     switch (type) {
@@ -81,9 +102,9 @@ export default function CanvasElement(props) {
       case 'page':
         return <ComponentPageBase isPage />;
       case 'service':
-        return <>Service</>;
+        return <ServiceUtilBase isService />;
       case 'util':
-        return <>Util</>;
+        return <ServiceUtilBase />;
       case 'redux':
         return <>Redux</>;
       default:
@@ -102,9 +123,11 @@ export default function CanvasElement(props) {
     setPosition({ x: e.target.x(), y: e.target.y() });
   };
 
-  const handleFlyinDialog = () => {
-    console.log('SET SELECTED ELEMENT', rest.workspaceId);
-    dispatch(setSelectedElement(rest.workspaceId));
+  const handleFlyinDialog = (e) => {
+    if (e.button === 0) {
+      console.log('SET SELECTED ELEMENT', rest.workspaceId);
+      dispatch(setSelectedElement(rest.workspaceId));
+    }
   };
 
   return (
@@ -129,9 +152,8 @@ export default function CanvasElement(props) {
           shadowBlur={10}
           onClick={handleFlyinDialog}
         />
-        {/* Below is the div which enables resizing within canvas */}
-        {/* TO DO: RESIZER DISAPPEARS WHEN REDUCED TO MINHEIGHT-MINWIDTH */}
       </Group>
+      {/* Below is the div which enables resizing within canvas */}
       <Group
         x={position.x + divDimensions.width}
         y={position.y + divDimensions.height}

@@ -5,11 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import CanvasElement from './CanvasElement';
 import { addElement } from '../../redux/workspaceSlice';
 import { v4 as uuidv4 } from 'uuid';
+import { useEditorDispatch } from './context/EditorContext';
+import { setScale } from './context/EditorActions';
 
 export default function Canvas() {
   const stageRef = useRef();
 
   const dispatch = useDispatch();
+  const editorDispatch = useEditorDispatch();
 
   const elements = useSelector((state) => state.workspace.elements);
 
@@ -67,6 +70,7 @@ export default function Canvas() {
     // Scale up for positive delta, scale down for negative delta
     const newScale = oldScale * Math.pow(scaleBy, sign);
     stage.scale({ x: newScale, y: newScale });
+    editorDispatch(setScale(newScale));
 
     const newPos = {
       x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,

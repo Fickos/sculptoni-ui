@@ -1,0 +1,23 @@
+@import '../../colors.scss';
+
+.service,
+.util {
+  width: unset;
+
+  .stripe-head {
+    border-bottom: 3px solid $black;
+    background-color: $yellow;
+    color: $black;
+
+    > .type-indicator {
+      border-right: 3px solid $black;
+    }
+  }
+
+  > .stripe-two {
+    flex: 1;
+    background: linear-gradient(0.5turn, #dfc928, #ffff00, #dfc928);
+    color: black;
+    overflow: hidden;
+  }
+}

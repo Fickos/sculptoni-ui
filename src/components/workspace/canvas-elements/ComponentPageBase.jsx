@@ -6,6 +6,7 @@ ComponentPageBase.propTypes = {
 };
 
 export default function ComponentPageBase(props) {
+  // eslint-disable-next-line no-unused-vars
   const { isPage, ...rest } = props;
 
   return (
