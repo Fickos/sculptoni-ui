@@ -1,0 +1,32 @@
+@import '../../colors.scss';
+
+.redux {
+  width: unset;
+
+  .stripe-head {
+    color: white;
+    text-align: center;
+
+    > .type-indicator {
+      background-color: $redux-purple;
+      color: $black;
+    }
+
+    > .name {
+      background-color: $black;
+    }
+  }
+
+  .stripe-two {
+    display: flex;
+    height: calc(50% - 50px);
+    background-color: $redux-background1;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  }
+
+  .stripe-three {
+    flex: 1;
+    background-color: $redux-background2;
+  }
+}

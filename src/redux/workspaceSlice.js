@@ -16,6 +16,14 @@ export const workspaceSlice = createSlice({
   },
 });
 
+export const workspaceSliceSelectors = {
+  selectedElement: ({ workspace }) => {
+    return workspace.elements?.find(
+      (el) => el.workspaceId === workspace.selectedElement
+    );
+  },
+};
+
 export const { addElement, setSelectedElement } = workspaceSlice.actions;
 
 export default workspaceSlice.reducer;

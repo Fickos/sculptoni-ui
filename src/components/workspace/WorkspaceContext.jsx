@@ -6,6 +6,7 @@ import FlyInDialog from './generic/FlyInDialog';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelectedElement } from '../../redux/workspaceSlice';
 import { EditorProvider } from './context/EditorProvider';
+import ElementForm from './canvas-elements-forms/ElementForm';
 
 export default function WorkspaceContext() {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ export default function WorkspaceContext() {
           <Sidebar />
           <Canvas />
           <FlyInDialog open={selectedElement !== null} setOpen={setOpen}>
-            <div>This is flyInDialog</div>
+            <ElementForm />
           </FlyInDialog>
         </div>
       </EditorProvider>

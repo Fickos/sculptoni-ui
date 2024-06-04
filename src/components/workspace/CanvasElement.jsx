@@ -2,14 +2,14 @@ import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
 import { Group, Rect } from 'react-konva';
 import { Html } from 'react-konva-utils';
-
-import '../../styles/components/canvas-elements/BaseElement.scss';
-import '../../styles/components/canvas-elements/Component.scss'; // To do : new file
 import ComponentPageBase from './canvas-elements/ComponentPageBase';
+import ServiceUtilBase from './canvas-elements/ServiceUtilBase';
+import Redux from './canvas-elements/Redux';
 import { useDispatch } from 'react-redux';
 import { setSelectedElement } from '../../redux/workspaceSlice';
-import ServiceUtilBase from './canvas-elements/ServiceUtilBase';
 import { useEditor } from './context/EditorContext';
+
+import '../../styles/components/canvas-elements/BaseElement.scss';
 
 CanvasElement.propTypes = {
   x: PropTypes.number,
@@ -106,7 +106,7 @@ export default function CanvasElement(props) {
       case 'util':
         return <ServiceUtilBase />;
       case 'redux':
-        return <>Redux</>;
+        return <Redux />;
       default:
         return null;
     }
@@ -123,11 +123,8 @@ export default function CanvasElement(props) {
     setPosition({ x: e.target.x(), y: e.target.y() });
   };
 
-  const handleFlyinDialog = (e) => {
-    if (e.button === 0) {
-      console.log('SET SELECTED ELEMENT', rest.workspaceId);
-      dispatch(setSelectedElement(rest.workspaceId));
-    }
+  const handleFlyinDialog = () => {
+    dispatch(setSelectedElement(rest.workspaceId));
   };
 
   return (
