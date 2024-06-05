@@ -1,0 +1,141 @@
+@import '../../colors.scss';
+
+.multi-stage-form-container {
+  > .tabs {
+    display: flex;
+    border-bottom: 2px solid $black-3;
+
+    > .tab {
+      height: 3em;
+      flex: 1;
+      padding: 0.75em;
+      font-size: 1.125rem;
+      background-color: $black-1;
+      border: none;
+      color: $white-text;
+      text-align: center;
+      outline: none;
+      position: relative;
+      cursor: pointer;
+
+      // Pseudo element for sliding border
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 4px;
+        background-color: transparent;
+        transition: width 0.3s ease, background-color 0.3s ease;
+      }
+
+      &:hover {
+        background-color: $black-3;
+      }
+
+      &.active {
+        color: $white;
+        font-weight: 600;
+        z-index: 1;
+        box-shadow: -4px 0 8px -4px rgba(255, 255, 255, 0.5),
+          /* Left shadow */ 4px 0 8px -4px rgba(255, 255, 255, 0.5); /* Right shadow */
+        &::after {
+          width: 100%;
+          background-color: $turquoise;
+        }
+      }
+
+      &.util,
+      &.service {
+        &.active::after {
+          background-color: $yellow;
+        }
+      }
+
+      &.redux {
+        &.active::after {
+          background-color: $redux-purple;
+        }
+      }
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    color: $white;
+    margin-left: 1.5em;
+
+    th,
+    td {
+      padding: 0.75em;
+      border: 1px solid $black-3;
+      text-align: left;
+    }
+    th {
+      background-color: $black-3;
+    }
+
+    td.actions-cell {
+      display: flex;
+      align-items: flex-end;
+      gap: 1em;
+    }
+  }
+
+  form {
+    margin-bottom: 1em;
+    color: $white;
+    padding: 2em;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    gap: 1em;
+
+    .form-group {
+      flex: 1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.35em;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border: 1px solid $black-1;
+      background-color: $black-1;
+      color: $white;
+      outline: none;
+    }
+  }
+}
+
+button.action-btn {
+  background-color: $action-btn;
+  height: 2.5em;
+  width: 4em;
+  border: none;
+  color: $white;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $action-btn-hover;
+  }
+}
+button.edit {
+  background-color: $edit-btn;
+  &:hover {
+    background-color: $edit-btn-hover;
+  }
+}
+button.remove {
+  background-color: $delete-btn;
+  &:hover {
+    background-color: $delete-btn-hover;
+  }
+}

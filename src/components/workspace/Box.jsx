@@ -4,14 +4,7 @@ import { CANVAS_ELEMENT_TYPES as CET } from '../../costants';
 
 import '../../styles/components/canvas-elements/BaseElement.scss';
 import '../../styles/components/canvas-elements/Component.scss';
-
-const initialStates = {
-  component: {},
-  page: {},
-  service: {},
-  util: {},
-  redux: {},
-};
+import { initialElementStates } from '../../utils/initialElementStates';
 
 Box.propTypes = {
   type: PropTypes.string,
@@ -30,7 +23,10 @@ export default function Box(props) {
 
   const [{ isDragging }, drag] = useDrag({
     type: 'box',
-    item: { type, data: initialStates[type] },
+    item: {
+      type,
+      data: JSON.parse(JSON.stringify(initialElementStates[type])),
+    },
     // Code from documentation
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),

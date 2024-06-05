@@ -19,6 +19,7 @@ export default function FlyInDialog(props) {
     children,
   } = props;
 
+  // eslint-disable-next-line no-unused-vars
   const toggleDrawer = (anchor, open) => (e) => {
     if (e.type === 'keydown' && (e.key === 'Tab' || e.key === 'Shift')) {
       return;
@@ -40,7 +41,7 @@ export default function FlyInDialog(props) {
         anchor={anchor}
         open={open}
         onClose={handleCloseWrapper}
-        PaperProps={{ style: { width: '50%', backgroundColor: '#333' } }}
+        PaperProps={{ style: { width: '75%', backgroundColor: '#333' } }}
       >
         {children}
       </Drawer>

@@ -99,9 +99,9 @@ export default function Canvas() {
         onWheel={handleStageScale}
       >
         <Layer>
-          {elements.map((el, i) => (
+          {elements.map((el) => (
             <CanvasElement
-              key={i}
+              key={el.workspaceId}
               x={el.x}
               y={el.y}
               type={el.type}

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, memo } from 'react';
 import { Group, Rect } from 'react-konva';
 import { Html } from 'react-konva-utils';
 import ComponentPageBase from './canvas-elements/ComponentPageBase';
@@ -11,15 +11,7 @@ import { useEditor } from './context/EditorContext';
 
 import '../../styles/components/canvas-elements/BaseElement.scss';
 
-CanvasElement.propTypes = {
-  x: PropTypes.number,
-  y: PropTypes.number,
-  type: PropTypes.string,
-  scale: PropTypes.number,
-  rest: PropTypes.any,
-};
-
-export default function CanvasElement(props) {
+const CanvasElement = memo(function CanvasElement(props) {
   // eslint-disable-next-line no-unused-vars
   const { x, y, type, scale, ...rest } = props; // ...rest will be used in flyin dialog
 
@@ -98,9 +90,9 @@ export default function CanvasElement(props) {
   const renderCardContent = () => {
     switch (type) {
       case 'component':
-        return <ComponentPageBase />;
+        return <ComponentPageBase {...rest.data} />;
       case 'page':
-        return <ComponentPageBase isPage />;
+        return <ComponentPageBase isPage {...rest.data} />;
       case 'service':
         return <ServiceUtilBase isService />;
       case 'util':
@@ -167,4 +159,14 @@ export default function CanvasElement(props) {
       </Group>
     </>
   );
-}
+});
+
+CanvasElement.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  type: PropTypes.string,
+  scale: PropTypes.number,
+  rest: PropTypes.any,
+};
+
+export default CanvasElement;

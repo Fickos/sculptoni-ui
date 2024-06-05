@@ -5,9 +5,9 @@ import About from './pages/About';
 import Projects from './pages/Projects';
 import Organization from './pages/Organization';
 import Templates from './pages/Templates';
+import Profile from './pages/Profile';
 
 import './App.scss';
-import Profile from './pages/Profile';
 
 function App() {
   return (

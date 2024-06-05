@@ -1,11 +1,11 @@
 import withRenderOnlyWhenElementSelected from '../../../hocs/withRenderOnlyWhenElementSelected';
+import ComponentForm from './component/ComponentForm';
 
 const ElementForm = withRenderOnlyWhenElementSelected(({ element }) => {
   switch (element.type) {
     case 'component':
-      return <div>This is a component</div>;
     case 'page':
-      return <div>This is a page</div>;
+      return <ComponentForm />;
     case 'service':
       return <div>This is a service</div>;
     case 'util':

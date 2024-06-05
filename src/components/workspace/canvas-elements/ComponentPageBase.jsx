@@ -3,10 +3,17 @@ import '../../../styles/components/canvas-elements/Component.scss';
 
 ComponentPageBase.propTypes = {
   isPage: PropTypes.bool,
+  rest: PropTypes.objectOf({
+    name: PropTypes.string,
+    states: PropTypes.array,
+    effects: PropTypes.array,
+    actions: PropTypes.array,
+    return: PropTypes.string,
+    imports: PropTypes.array,
+  }),
 };
 
 export default function ComponentPageBase(props) {
-  // eslint-disable-next-line no-unused-vars
   const { isPage, ...rest } = props;
 
   return (
@@ -14,34 +21,26 @@ export default function ComponentPageBase(props) {
       <div className="stripe-head">
         <div className="type-indicator">{isPage ? 'P' : 'C'}</div>
         <div className="name">
-          ComponentName
+          {rest.name}
           {isPage && <div className="stripe-route">/about</div>}
         </div>
       </div>
       <div className="stripe-two">
-        <div>state1</div>
-        <div>state1</div>
-        <div>state1</div>
-        <div>state1</div>
-        <div>state1</div>
-        <div>state1</div>
-        <div>state1</div>
-        <div>state1</div>
-        <div>state1</div>
-        <div>state1</div>
-        <div>state1</div>
-        <div>state1</div>
+        {rest.states.map((state) => (
+          <div key={state.name}>{state.name}</div>
+        ))}
       </div>
       <div className="stripe-three">
-        <div>loadAllUsersFromAgent</div>
-        <div>effect2</div>
+        {rest.effects.map((eff, i) => (
+          <div key={i}>{eff.function}</div>
+        ))}
       </div>
       <div className="stripe-four">
         <div className="text-editor"></div>
         <div className="import-section">
-          <div>Component1</div>
-          <div>{'MUI->123123'}</div>
-          <div>DNDNDNDNDNDNDNDNDNDDNNDNDND</div>
+          {rest.imports.map((imp) => (
+            <div key={imp.name}>{imp.name}</div>
+          ))}
         </div>
       </div>
     </>
