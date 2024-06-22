@@ -55,3 +55,8 @@ button.remove {
 input.error {
   border: 1px solid $red-danger !important;
 }
+
+.flex-inline {
+  display: flex;
+  align-items: flex-end;
+}

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
 
 export const workspaceSlice = createSlice({
   name: 'workspace',
@@ -14,6 +15,46 @@ export const workspaceSlice = createSlice({
       state.selectedElement = action.payload ?? null;
     },
     // Component form handlers
+    setComponentName: (state, action) => {
+      state.elements = state.elements.map((el) => {
+        if (el.workspaceId === state.selectedElement) {
+          return { ...el, data: { ...el.data, name: action.payload } };
+        }
+        return el;
+      });
+    },
+    setPageUrl: (state, action) => {
+      state.elements = state.elements.map((el) => {
+        if (el.workspaceId === state.selectedElement) {
+          return { ...el, data: { ...el.data, url: action.payload } };
+        }
+        return el;
+      });
+    },
+    addProp: (state, action) => {
+      state.elements = state.elements.map((el) => {
+        if (el.workspaceId === state.selectedElement) {
+          return {
+            ...el,
+            data: { ...el.data, props: [...el.data.props, action.payload] },
+          };
+        }
+        return el;
+      });
+    },
+    removeProp: (state, action) => {
+      state.elements = state.elements.map((el) => {
+        if (el.workspaceId === state.selectedElement) {
+          return {
+            ...el,
+            data: {
+              ...el.data,
+              props: el.data.props.filter((p) => p !== action.payload),
+            },
+          };
+        }
+      });
+    },
     addStateToComponent: (state, action) => {
       state.elements = state.elements.map((el) => {
         if (el.workspaceId === state.selectedElement) {
@@ -56,6 +97,39 @@ export const workspaceSlice = createSlice({
         return el;
       });
     },
+    addEffect: (state, action) => {
+      state.elements = state.elements.map((el) => {
+        if (el.workspaceId === state.selectedElement) {
+          return {
+            ...el,
+            data: {
+              ...el.data,
+              effects: [
+                ...el.data.effects,
+                { ...action.payload, id: uuidv4() },
+              ],
+            },
+          };
+        }
+        return el;
+      });
+    },
+    removeEffect: (state, action) => {
+      state.elements = state.elements.map((el) => {
+        if (el.workspaceId === state.selectedElement) {
+          return {
+            ...el,
+            data: {
+              ...el.data,
+              effects: el.data.effects.filter(
+                (eff) => eff.id !== action.payload
+              ),
+            },
+          };
+        }
+        return el;
+      });
+    },
   },
 });
 
@@ -65,6 +139,37 @@ export const workspaceSliceSelectors = {
       (el) => el.workspaceId === workspace.selectedElement
     );
   },
+  suggestionsForEffectFunctions: ({ workspace }) => {
+    const suggestions = [];
+    // Suggestions can be handler functions from the element itself
+    // Or the setState functions from element itself
+    // Or any of the service / util function from the workspace
+    if (workspace.selectedElement) {
+      const selectedElObject = workspace.elements?.find(
+        (el) => el.workspaceId === workspace.selectedElement
+      ).data;
+      for (let state of selectedElObject.states) {
+        suggestions.push(
+          'set' + state.name.charAt(0).toUpperCase() + state.name.slice(1)
+        );
+      }
+    }
+    return suggestions;
+  },
+  suggestionsForEffectDependencyArr: ({ workspace }) => {
+    let suggestions = [];
+    // Suggestions can be props or state from the element itself
+    if (workspace.selectedElement) {
+      const selectedElObject = workspace.elements?.find(
+        (el) => el.workspaceId === workspace.selectedElement
+      ).data;
+      suggestions = [
+        ...selectedElObject.props.map((p) => p),
+        ...selectedElObject.states.map((s) => s.name),
+      ];
+    }
+    return suggestions;
+  },
 };
 
 export const {
@@ -72,6 +177,12 @@ export const {
   setSelectedElement,
   addStateToComponent,
   deleteStateFromComponent,
+  setComponentName,
+  setPageUrl,
+  addProp,
+  removeProp,
+  addEffect,
+  removeEffect,
 } = workspaceSlice.actions;
 
 export default workspaceSlice.reducer;

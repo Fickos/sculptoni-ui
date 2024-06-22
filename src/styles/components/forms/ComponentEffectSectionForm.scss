@@ -1,0 +1,54 @@
+@import '../../colors.scss';
+
+.effect-form {
+  display: flex;
+  gap: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-top: 2em;
+
+  > .autocomplete {
+    position: relative;
+    flex-grow: 1;
+
+    > input {
+      border-radius: 8px;
+    }
+
+    > button {
+      position: absolute;
+      right: 0;
+      height: 100%;
+    }
+
+    > .dropdown {
+      position: absolute;
+      top: 120%;
+      background-color: $dropdown-background;
+      padding: 1em;
+      display: flex;
+      flex-direction: column;
+      border-radius: 8px;
+      color: $white-text2;
+
+      > .suggestion {
+        cursor: pointer;
+        padding: 1em;
+
+        &:hover {
+          background-color: $dropdown-background-hover;
+        }
+      }
+    }
+  }
+
+  > .action-btn {
+    width: 200px;
+  }
+}
+
+.current-effect-preview {
+  display: flex;
+  justify-content: space-around;
+  color: $white;
+}

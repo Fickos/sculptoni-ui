@@ -1,5 +1,7 @@
 const initialComponentState = Object.freeze({
   name: '',
+  path: 'src/components',
+  props: [],
   states: [],
   effects: [],
   actions: [],
@@ -9,6 +11,7 @@ const initialComponentState = Object.freeze({
 
 const initialPageState = Object.freeze({
   ...initialComponentState,
+  path: 'src/pages',
   url: '',
 });
 

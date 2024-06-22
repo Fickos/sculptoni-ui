@@ -22,7 +22,7 @@ export default function ComponentPageBase(props) {
         <div className="type-indicator">{isPage ? 'P' : 'C'}</div>
         <div className="name">
           {rest.name}
-          {isPage && <div className="stripe-route">/about</div>}
+          {isPage && <div className="stripe-route">{rest.url}</div>}
         </div>
       </div>
       <div className="stripe-two">

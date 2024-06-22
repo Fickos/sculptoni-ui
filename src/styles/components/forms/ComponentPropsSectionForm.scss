@@ -1,0 +1,36 @@
+@import '../../colors.scss';
+
+.props-section {
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3em;
+
+  input {
+    width: 30em;
+  }
+  .flex-inline {
+    gap: 1em;
+  }
+  .props {
+    padding: 3em;
+    display: flex;
+    flex-direction: column;
+    width: 30em;
+    gap: 1em;
+
+    > .prop-item {
+      font-size: 1.25rem;
+      display: flex;
+      gap: 3em;
+      justify-content: space-between;
+
+      > span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
