@@ -1,0 +1,28 @@
+@import '../../colors.scss';
+
+.function-info {
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+
+  > .inline-controls {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1em;
+
+    > label {
+      text-wrap: nowrap;
+    }
+  }
+
+  .action-btn {
+    width: unset;
+    height: unset;
+    padding: 1em;
+    text-wrap: none;
+  }
+}

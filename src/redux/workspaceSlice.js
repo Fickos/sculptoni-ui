@@ -98,6 +98,7 @@ export const workspaceSlice = createSlice({
       });
     },
     addEffect: (state, action) => {
+      // TO DO: make sure that the action name is unique on the component level
       state.elements = state.elements.map((el) => {
         if (el.workspaceId === state.selectedElement) {
           return {
@@ -124,6 +125,58 @@ export const workspaceSlice = createSlice({
               effects: el.data.effects.filter(
                 (eff) => eff.id !== action.payload
               ),
+            },
+          };
+        }
+        return el;
+      });
+    },
+    addAction: (state, action) => {
+      // TO DO: make sure that the action name is unique on the component level
+      state.elements = state.elements.map((el) => {
+        if (el.workspaceId === state.selectedElement) {
+          return {
+            ...el,
+            data: {
+              ...el.data,
+              actions: [
+                ...el.data.actions,
+                { ...action.payload, id: uuidv4() },
+              ],
+            },
+          };
+        }
+        return el;
+      });
+    },
+    editAction: (state, action) => {
+      // TO DO: make sure that the action name is unique on the component level
+      state.elements = state.elements.map((el) => {
+        if (el.workspaceId === state.selectedElement) {
+          return {
+            ...el,
+            data: {
+              ...el.data,
+              actions: el.data.actions.map((a) => {
+                if (a.id !== action.payload.id) {
+                  return a;
+                }
+                return action.payload;
+              }),
+            },
+          };
+        }
+        return el;
+      });
+    },
+    removeAction: (state, action) => {
+      state.elements = state.elements.map((el) => {
+        if (el.workspaceId === state.selectedElement) {
+          return {
+            ...el,
+            data: {
+              ...el.data,
+              actions: el.data.actions.filter((a) => a.id !== action.payload),
             },
           };
         }
@@ -183,6 +236,9 @@ export const {
   removeProp,
   addEffect,
   removeEffect,
+  addAction,
+  editAction,
+  removeAction,
 } = workspaceSlice.actions;
 
 export default workspaceSlice.reducer;

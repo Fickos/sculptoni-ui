@@ -1,6 +1,8 @@
 @import '../../colors.scss';
 
 .multi-stage-form-container {
+  color: $white;
+
   > .tabs {
     display: flex;
     border-bottom: 2px solid $black-3;
@@ -135,7 +137,7 @@ label {
   display: block;
   margin-bottom: 0.35em;
 }
-input {
+input[type='text'] {
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
@@ -148,4 +150,9 @@ input {
     color: $white-text;
     background-color: $black-2;
   }
+}
+
+input[type='checkbox'] {
+  height: 2em;
+  width: 4em;
 }
