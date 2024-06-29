@@ -24,7 +24,6 @@ export default function ActionsFormTab() {
 
   const saveAction = () => {
     if (action.id) {
-      console.log('EDIT', action);
       dispatch(editAction(action));
     } else {
       dispatch(addAction(action));

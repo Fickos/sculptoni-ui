@@ -196,6 +196,40 @@ export const workspaceSlice = createSlice({
         }
       });
     },
+    addToImports: (state, action) => {
+      const { workspaceId, data } = action.payload;
+      state.elements = state.elements.map((el) => {
+        if (el.workspaceId === state.selectedElement) {
+          return {
+            ...el,
+            data: {
+              ...el.data,
+              imports: [
+                ...el.data.imports,
+                { workspaceId: workspaceId, name: data.name, path: data.path },
+              ],
+            },
+          };
+        }
+        return el;
+      });
+    },
+    removeFromImports: (state, action) => {
+      state.elements = state.elements.map((el) => {
+        if (el.workspaceId === state.selectedElement) {
+          return {
+            ...el,
+            data: {
+              ...el.data,
+              imports: el.data.imports.filter(
+                (el) => el.workspaceId !== action.payload
+              ),
+            },
+          };
+        }
+        return el;
+      });
+    },
   },
 });
 
@@ -236,6 +270,24 @@ export const workspaceSliceSelectors = {
     }
     return suggestions;
   },
+  suggestionsForImportSection: ({ workspace }) => {
+    let alreadyImported = [];
+    if (workspace.selectedElement) {
+      const selectedElObject = workspace.elements?.find(
+        (el) => el.workspaceId === workspace.selectedElement
+      ).data;
+      alreadyImported.push(...selectedElObject.imports);
+    }
+    return workspace.elements.filter(
+      (el) =>
+        el.type === 'component' &&
+        el.workspaceId !== workspace.selectedElement &&
+        !!el.data?.name &&
+        alreadyImported.findIndex(
+          (imported) => imported.workspaceId === el.workspaceId
+        ) === -1
+    );
+  },
 };
 
 export const {
@@ -253,6 +305,8 @@ export const {
   editAction,
   removeAction,
   setHtmlContent,
+  addToImports,
+  removeFromImports,
 } = workspaceSlice.actions;
 
 export default workspaceSlice.reducer;
