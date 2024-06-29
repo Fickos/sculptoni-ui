@@ -183,6 +183,19 @@ export const workspaceSlice = createSlice({
         return el;
       });
     },
+    setHtmlContent: (state, action) => {
+      state.elements = state.elements.map((el) => {
+        if (el.workspaceId === state.selectedElement) {
+          return {
+            ...el,
+            data: {
+              ...el.data,
+              return: action.payload,
+            },
+          };
+        }
+      });
+    },
   },
 });
 
@@ -239,6 +252,7 @@ export const {
   addAction,
   editAction,
   removeAction,
+  setHtmlContent,
 } = workspaceSlice.actions;
 
 export default workspaceSlice.reducer;

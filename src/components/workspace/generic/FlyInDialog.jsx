@@ -41,7 +41,9 @@ export default function FlyInDialog(props) {
         anchor={anchor}
         open={open}
         onClose={handleCloseWrapper}
-        PaperProps={{ style: { width: '75%', backgroundColor: '#333' } }}
+        PaperProps={{
+          style: { width: '75%', backgroundColor: '#333', overflowX: 'clip' },
+        }}
       >
         {children}
       </Drawer>

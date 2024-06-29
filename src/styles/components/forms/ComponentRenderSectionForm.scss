@@ -1,0 +1,26 @@
+@import '../../colors.scss';
+
+.render-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  > .dz-wrapper {
+    flex-grow: 1;
+
+    > .drop-zone {
+      height: calc(100% - 2em - 20px);
+      width: calc(100% - 50px);
+      border: 2px dashed ghostwhite;
+      border-radius: 8px;
+      padding: 1em;
+      margin: 0.5em;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25em;
+    }
+  }
+}
