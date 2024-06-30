@@ -1,9 +1,45 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
+import {
+  loadProjectById,
+  saveProject as saveProjectAPI,
+} from '../services/projectService';
+
+export const loadProject = createAsyncThunk(
+  'workspace/loadProject',
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await loadProjectById(id);
+      return response.data.result;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const saveProject = createAsyncThunk(
+  'workspace/saveProject',
+  async (_, { getState, rejectWithValue }) => {
+    const state = getState();
+    try {
+      const { workspace } = state;
+      const response = await saveProjectAPI({
+        id: workspace.id,
+        name: workspace.name,
+        elements: workspace.elements,
+      });
+      return response.data.result;
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  }
+);
 
 export const workspaceSlice = createSlice({
   name: 'workspace',
   initialState: {
+    id: null,
+    name: 'random',
     elements: [],
     selectedElement: null,
   },
@@ -230,6 +266,26 @@ export const workspaceSlice = createSlice({
         return el;
       });
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loadProject.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loadProject.fulfilled, (state, action) => {
+        state.loading = false;
+        state.elements = action.payload.elements;
+        state.id = action.payload._id;
+        state.name = action.payload.name;
+      })
+      .addCase(loadProject.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(saveProject.fulfilled, (state, action) => {
+        state.id = action.payload._id;
+      });
   },
 });
 

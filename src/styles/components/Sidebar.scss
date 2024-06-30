@@ -23,6 +23,10 @@
       flex-wrap: wrap;
       gap: 1em;
       justify-content: space-evenly;
+
+      *.page {
+        height: unset;
+      }
     }
   }
   // TO DO: CREATE RETRACTABLE (BURGER-STYLE SIDEBAR) WITH
