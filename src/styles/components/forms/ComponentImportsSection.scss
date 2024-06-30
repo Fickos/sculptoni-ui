@@ -1,0 +1,67 @@
+@import '../../colors.scss';
+
+.imports-section {
+  width: 80%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+
+  input {
+    height: 2em;
+    font-size: 1.25rem;
+    border-radius: 8px;
+    box-shadow: none;
+    padding-left: 1em;
+
+    &:focus {
+      border: 1px solid $turquoise;
+      outline: none;
+    }
+  }
+
+  .flex-split-two {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    display: flex;
+    gap: 1em;
+    justify-content: space-between;
+    height: 100%;
+
+    > .options {
+      border: 1px solid $white-text;
+      padding: 1em 3em;
+      overflow-y: auto;
+      width: 50%;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+
+      > div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      * button {
+        background: transparent;
+        font-size: 1.5rem;
+        padding: 0;
+
+        &.add {
+          color: $turquoise;
+          &:hover {
+            color: $turquoise-hover;
+          }
+        }
+        &.remove {
+          color: $delete-btn;
+          &:hover {
+            color: $delete-btn-hover;
+          }
+        }
+      }
+    }
+  }
+}

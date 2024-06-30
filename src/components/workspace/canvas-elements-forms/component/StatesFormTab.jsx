@@ -5,6 +5,7 @@ import {
   deleteStateFromComponent,
   workspaceSliceSelectors,
 } from '../../../../redux/workspaceSlice';
+import '../../../../styles/components/forms/ComponentStateSectionForm.scss';
 
 export default function StatesFormTab() {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ export default function StatesFormTab() {
   };
 
   return (
-    <div>
+    <div className="states-section">
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name:</label>

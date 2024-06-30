@@ -8,8 +8,8 @@
   align-items: center;
   padding: 3em;
 
-  input {
-    width: 30em;
+  * input {
+    width: 50em !important;
   }
   .flex-inline {
     gap: 1em;
@@ -32,5 +32,9 @@
         text-overflow: ellipsis;
       }
     }
+  }
+  * .action-btn {
+    padding: 0em 1em;
+    height: 2.5em;
   }
 }

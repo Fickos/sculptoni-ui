@@ -10,15 +10,21 @@
   > .autocomplete {
     position: relative;
     flex-grow: 1;
+    display: flex;
 
     > input {
       border-radius: 8px;
+      width: unset;
+      flex-grow: 1;
     }
 
     > button {
       position: absolute;
       right: 0;
       height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     > .dropdown {
@@ -43,7 +49,9 @@
   }
 
   > .action-btn {
-    width: 200px;
+    width: 15em;
+    height: 2.5em;
+    padding: 0;
   }
 }
 
